@@ -1,13 +1,14 @@
 import 'dart:ui';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:flame/sprite.dart';
 import '../langaw_game.dart';
 
 class SoundButton {
   final LangawGame game;
 
-  Rect rect;
-  Sprite enabledSprite;
-  Sprite disabledSprite;
+  late Rect rect;
+  late Sprite enabledSprite;
+  late Sprite disabledSprite;
 
   bool isEnabled = true;
 

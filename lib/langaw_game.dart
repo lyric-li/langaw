@@ -1,3 +1,5 @@
+// ignore_for_file: import_of_legacy_library_into_null_safe
+
 import 'dart:ui';
 import 'dart:math';
 
@@ -35,26 +37,26 @@ import 'views/sound_button.dart';
 class LangawGame extends Game with TapDetector {
   final SharedPreferences storage;
 
-  Size screenSize;
-  double tileSize;
-  List<Fly> flies;
-  Random rand;
-  Backyard background;
-  FlySpawner spawner;
+  late Size screenSize;
+  late double tileSize;
+  late List<Fly> flies;
+  late Random rand;
+  late Backyard background;
+  late FlySpawner spawner;
   View activeView = View.home;
-  HomeView home;
-  LostView lost;
-  StartButton startButton;
-  HelpButton helpButton;
-  CreditsButton creditsButton;
-  MusicButton musicButton;
-  SoundButton soundButton;
-  HelpView helpView;
-  CreditsView creditsView;
-  ScoreDisplay scoreDisplay;
-  int score;
-  HighscoreDisplay highscoreDisplay;
-  AudioPlayer bgm;
+  late HomeView home;
+  late LostView lost;
+  late StartButton startButton;
+  late HelpButton helpButton;
+  late CreditsButton creditsButton;
+  late MusicButton musicButton;
+  late SoundButton soundButton;
+  late HelpView helpView;
+  late CreditsView creditsView;
+  late ScoreDisplay scoreDisplay;
+  late int score;
+  late HighscoreDisplay highscoreDisplay;
+  late AudioPlayer bgm;
 
   bool get isPlaying => activeView == View.playing;
 
@@ -266,7 +268,7 @@ class LangawGame extends Game with TapDetector {
     activeView = view;
   }
 
-  void updateScore(val) {
+  void updateScore(int val) {
     if (isPlaying) {
       score += val;
       if (score > (storage.getInt('highscore') ?? 0)) {

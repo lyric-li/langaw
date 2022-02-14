@@ -4,9 +4,9 @@ import '../langaw_game.dart';
 class ScoreDisplay {
   final LangawGame game;
 
-  TextPainter painter;
-  TextStyle style;
-  Offset position;
+  late TextPainter painter;
+  TextStyle? style;
+  late Offset position;
 
   ScoreDisplay(this.game) {
     painter = TextPainter(

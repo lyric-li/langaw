@@ -1,12 +1,13 @@
 import 'dart:ui';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:flame/sprite.dart';
 import '../langaw_game.dart';
 
 class LostView {
   final LangawGame game;
 
-  Rect rect;
-  Sprite sprite;
+  late Rect rect;
+  late Sprite sprite;
 
   LostView(this.game) {
     rect = Rect.fromLTWH(

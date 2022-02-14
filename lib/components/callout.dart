@@ -1,3 +1,5 @@
+// ignore_for_file: import_of_legacy_library_into_null_safe
+
 import 'package:flutter/material.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/sprite.dart';
@@ -8,13 +10,13 @@ import '../utils.dart';
 class Callout {
   final Fly fly;
 
-  Rect rect;
-  Sprite sprite;
+  late Rect rect;
+  late Sprite sprite;
 
-  TextPainter painter;
-  TextStyle style;
-  Offset offset;
-  double value;
+  late TextPainter painter;
+  TextStyle? style;
+  late Offset offset;
+  late double value;
 
   Callout(this.fly) {
     sprite = Sprite('ui/callout.png');

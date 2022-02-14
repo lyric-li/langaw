@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:flame/sprite.dart';
 import './fly.dart';
 import '../langaw_game.dart';

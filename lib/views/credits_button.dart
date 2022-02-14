@@ -1,4 +1,5 @@
 import 'dart:ui';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:flame/sprite.dart';
 import '../langaw_game.dart';
 import '../view.dart';
@@ -6,8 +7,8 @@ import '../view.dart';
 class CreditsButton {
   final LangawGame game;
 
-  Rect rect;
-  Sprite sprite;
+  late Rect rect;
+  late Sprite sprite;
 
   CreditsButton(this.game) {
     rect = Rect.fromLTWH(

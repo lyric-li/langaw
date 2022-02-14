@@ -8,8 +8,8 @@ class FlySpawner {
   final int intervalChange = 3;
   final int maxFliesOnScreen = 7;
 
-  int currentInterval;
-  int nextSpawn;
+  late int currentInterval;
+  late int nextSpawn;
 
   FlySpawner(this.game) {
     start();

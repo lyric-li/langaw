@@ -1,3 +1,5 @@
+// ignore_for_file: import_of_legacy_library_into_null_safe
+
 import 'dart:ui';
 import 'package:flame/flame.dart';
 import 'package:flame/sprite.dart';
@@ -8,15 +10,15 @@ import '../utils.dart';
 class Fly {
   final LangawGame game;
 
-  Rect flyRect;
+  late Rect flyRect;
   // Paint flyPaint;
   List<Sprite> flyingSprite = [];
-  Sprite deadSprite;
+  late Sprite deadSprite;
   double flyingSpriteIndex = 0;
   bool isDead = false;
   bool isOffScreen = false;
-  Offset targetLocation;
-  Callout callout;
+  late Offset targetLocation;
+  late Callout callout;
 
   int value = 1;
   double get speed => game.tileSize * 3;

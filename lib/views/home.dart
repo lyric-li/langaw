@@ -1,12 +1,13 @@
 import 'dart:ui';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:flame/sprite.dart';
 import '../langaw_game.dart';
 
 class HomeView {
   final LangawGame game;
 
-  Rect titleRect;
-  Sprite titleSprite;
+  late Rect titleRect;
+  late Sprite titleSprite;
 
   HomeView(this.game) {
     titleRect = Rect.fromLTWH(

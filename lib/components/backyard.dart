@@ -1,10 +1,11 @@
 import 'dart:ui';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:flame/sprite.dart';
 import '../langaw_game.dart';
 
 class Backyard {
-  Sprite bgSprite;
-  Rect bgRect;
+  late Sprite bgSprite;
+  late Rect bgRect;
 
   Backyard(LangawGame game) {
     bgSprite = Sprite('bg/backyard.png');

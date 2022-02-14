@@ -1,13 +1,15 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:flame/flame.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:shared_preferences/shared_preferences.dart';
 import './langaw_game.dart';
 import './utils.dart';
 
 class Launch extends StatefulWidget {
-  const Launch({Key key}) : super(key: key);
+  const Launch({Key? key}) : super(key: key);
 
   @override
   _LaunchState createState() => _LaunchState();

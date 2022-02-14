@@ -4,9 +4,9 @@ import '../langaw_game.dart';
 class HighscoreDisplay {
   final LangawGame game;
 
-  TextPainter painter;
-  TextStyle style;
-  Offset position;
+  late TextPainter painter;
+  TextStyle? style;
+  late Offset position;
 
   HighscoreDisplay(this.game) {
     painter = TextPainter(
