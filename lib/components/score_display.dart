@@ -1,8 +1,5 @@
-import 'dart:ui';
-
 import 'package:flutter/painting.dart';
-
-import '../langaw-game.dart';
+import '../langaw_game.dart';
 
 class ScoreDisplay {
   final LangawGame game;
@@ -17,17 +14,13 @@ class ScoreDisplay {
       textDirection: TextDirection.ltr,
     );
 
-    style = TextStyle(
-      color: Color(0xffffffff),
-      fontSize: 90,
-      shadows: [
-        Shadow(
-          blurRadius: 7,
-          color: Color(0xffffffff),
-          offset: Offset(3, 3),
-        ),
-      ]
-    );
+    style = const TextStyle(color: Color(0xffffffff), fontSize: 90, shadows: [
+      Shadow(
+        blurRadius: 7,
+        color: Color(0xffffffff),
+        offset: Offset(3, 3),
+      ),
+    ]);
 
     position = Offset.zero;
   }

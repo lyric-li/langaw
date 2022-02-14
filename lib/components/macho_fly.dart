@@ -3,12 +3,12 @@ import 'dart:ui';
 import 'package:flame/sprite.dart';
 
 import './fly.dart';
-import '../langaw-game.dart';
+import '../langaw_game.dart';
 
 class MachoFly extends Fly {
+  // int value = 4;
 
-  int value = 4;
-
+  @override
   double get speed => game.tileSize * 4;
 
   MachoFly(LangawGame game, double x, double y) : super(game) {

@@ -3,12 +3,12 @@ import 'dart:ui';
 import 'package:flame/sprite.dart';
 
 import './fly.dart';
-import '../langaw-game.dart';
+import '../langaw_game.dart';
 
 class DroolerFly extends Fly {
+  // int value = 2;
 
-  int value = 2;
-
+  @override
   double get speed => game.tileSize * 2;
 
   DroolerFly(LangawGame game, double x, double y) : super(game) {

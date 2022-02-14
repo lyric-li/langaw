@@ -1,8 +1,6 @@
 import 'dart:ui';
-
 import 'package:flame/sprite.dart';
-
-import '../langaw-game.dart';
+import '../langaw_game.dart';
 
 class LostView {
   final LangawGame game;

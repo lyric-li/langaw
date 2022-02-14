@@ -1,6 +1,4 @@
-import '../langaw-game.dart';
-
-import '../components/fly.dart';
+import '../langaw_game.dart';
 
 class FlySpawner {
   final LangawGame game;
@@ -25,7 +23,9 @@ class FlySpawner {
   }
 
   void killAll() {
-    game.flies.forEach((Fly fly) => fly.isDead = true);
+    for (var fly in game.flies) {
+      fly.isDead = true;
+    }
   }
 
   void update(double t) {
@@ -34,9 +34,9 @@ class FlySpawner {
     int nowTimestamp = DateTime.now().millisecondsSinceEpoch;
 
     int livingFlies = 0;
-    game.flies.forEach((Fly fly) {
+    for (var fly in game.flies) {
       if (!fly.isDead) livingFlies += 1;
-    });
+    }
 
     if (nowTimestamp >= nextSpawn && livingFlies < maxFliesOnScreen) {
       game.spawnFly();

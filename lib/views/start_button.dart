@@ -1,13 +1,11 @@
 import 'dart:ui';
-
 import 'package:flame/sprite.dart';
-
-import '../langaw-game.dart';
+import '../langaw_game.dart';
 import '../view.dart';
 
 class StartButton {
   final LangawGame game;
-  
+
   Rect rect;
   Sprite sprite;
 

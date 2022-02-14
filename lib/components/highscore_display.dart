@@ -1,8 +1,5 @@
-import 'dart:ui';
-
 import 'package:flutter/painting.dart';
-
-import '../langaw-game.dart';
+import '../langaw_game.dart';
 
 class HighscoreDisplay {
   final LangawGame game;
@@ -17,14 +14,14 @@ class HighscoreDisplay {
       textDirection: TextDirection.ltr,
     );
 
-    Shadow shadow = Shadow(
+    Shadow shadow = const Shadow(
       blurRadius: 3,
       color: Color(0xff000000),
       offset: Offset.zero,
     );
 
     style = TextStyle(
-      color: Color(0xffffffff),
+      color: const Color(0xffffffff),
       fontSize: 30,
       shadows: [shadow, shadow, shadow, shadow],
     );

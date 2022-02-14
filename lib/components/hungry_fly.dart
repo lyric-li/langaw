@@ -3,12 +3,12 @@ import 'dart:ui';
 import 'package:flame/sprite.dart';
 
 import './fly.dart';
-import '../langaw-game.dart';
+import '../langaw_game.dart';
 
 class HungryFly extends Fly {
+  // int value = 1;
 
-  int value = 1;
-
+  @override
   double get speed => game.tileSize * 1;
 
   HungryFly(LangawGame game, double x, double y) : super(game) {

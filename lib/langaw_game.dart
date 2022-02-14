@@ -5,37 +5,36 @@ import 'package:flutter/gestures.dart';
 
 import 'package:flame/game.dart';
 import 'package:flame/flame.dart';
-// import 'package:flame/bgm.dart';
 import 'package:flame/gestures.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 import './components/fly.dart';
 import './components/backyard.dart';
-import './components/house-fly.dart';
-import './components/agile-fly.dart';
-import './components/drooler-fly.dart';
-import './components/hungry-fly.dart';
-import './components/macho-fly.dart';
-import './components/score-display.dart';
-import './components/highscore-display.dart';
+import 'components/house_fly.dart';
+import 'components/agile_fly.dart';
+import 'components/drooler_fly.dart';
+import 'components/hungry_fly.dart';
+import 'components/macho_fly.dart';
+import 'components/score_display.dart';
+import 'components/highscore_display.dart';
 
 import './controllers/spawner.dart';
 
 import './view.dart';
 import './views/home.dart';
 import './views/lost.dart';
-import './views/start-button.dart';
-import './views/help-button.dart';
-import './views/credits-button.dart';
-import './views/help-view.dart';
-import './views/credits-view.dart';
-import './views/music-button.dart';
-import './views/sound-button.dart';
+import 'views/start_button.dart';
+import 'views/help_button.dart';
+import 'views/credits_button.dart';
+import 'views/help_view.dart';
+import 'views/credits_view.dart';
+import 'views/music_button.dart';
+import 'views/sound_button.dart';
 
 class LangawGame extends Game with TapDetector {
   final SharedPreferences storage;
-  
+
   Size screenSize;
   double tileSize;
   List<Fly> flies;
@@ -55,10 +54,6 @@ class LangawGame extends Game with TapDetector {
   ScoreDisplay scoreDisplay;
   int score;
   HighscoreDisplay highscoreDisplay;
-
-  // AudioPlayer homeBGM;
-  // AudioPlayer playingBGM;
-  // Bgm bgm;
   AudioPlayer bgm;
 
   bool get isPlaying => activeView == View.playing;
@@ -128,7 +123,9 @@ class LangawGame extends Game with TapDetector {
       highscoreDisplay.render(canvas);
     }
 
-    flies.forEach((Fly fly) => fly.render(canvas));
+    for (var fly in flies) {
+      fly.render(canvas);
+    }
 
     if (activeView == View.home) {
       home.render(canvas);
@@ -158,7 +155,9 @@ class LangawGame extends Game with TapDetector {
 
   @override
   void update(double t) {
-    flies.forEach((Fly fly) => fly.update(t));
+    for (var fly in flies) {
+      fly.update(t);
+    }
     flies.removeWhere((Fly fly) => fly.isOffScreen);
     spawner.update(t);
     if (isPlaying) {
@@ -167,19 +166,19 @@ class LangawGame extends Game with TapDetector {
   }
 
   @override
-  void onTapDown(TapDownDetails d) {
+  void onTapDown(TapDownDetails details) {
     // 音乐按钮
-    if (musicButton.rect.contains(d.globalPosition)) {
+    if (musicButton.rect.contains(details.globalPosition)) {
       musicButton.onTapDown();
       return;
     }
 
     // 音效按钮
-    if (soundButton.rect.contains(d.globalPosition)) {
+    if (soundButton.rect.contains(details.globalPosition)) {
       soundButton.onTapDown();
       return;
     }
-    
+
     if (!isPlaying) {
       if (activeView != View.lost) {
         // 点击任意关闭弹窗
@@ -187,46 +186,49 @@ class LangawGame extends Game with TapDetector {
       }
 
       // 点击帮助按钮
-      if (helpButton.rect.contains(d.globalPosition)) {
+      if (helpButton.rect.contains(details.globalPosition)) {
         helpButton.onTapDown();
       }
-      
+
       // 点击感谢按钮
-      if (creditsButton.rect.contains(d.globalPosition)) {
+      if (creditsButton.rect.contains(details.globalPosition)) {
         creditsButton.onTapDown();
       }
 
       // 点击开始按钮
-      if ((activeView == View.home || activeView == View.lost) && startButton.rect.contains(d.globalPosition)) {
+      if ((activeView == View.home || activeView == View.lost) &&
+          startButton.rect.contains(details.globalPosition)) {
         startButton.onTapDown();
       }
       return;
     }
 
     bool didHitAFly = false;
-    flies.forEach((Fly fly) {
-      if (fly.flyRect.contains(d.globalPosition)) {
+    for (var fly in flies) {
+      if (fly.flyRect.contains(details.globalPosition)) {
         fly.onTapDown(fly.value);
         didHitAFly = true;
       }
-    });
+    }
 
     // 存活的飞蝇
     List<Fly> tmps = List<Fly>.empty(growable: true);
-    flies.forEach((Fly fly) => { 
+    for (var fly in flies) {
       if (!fly.isDead) {
-        tmps.add(fly)
+        tmps.add(fly);
       }
-    });
-    if (!didHitAFly && tmps.length > 0) {
+    }
+    if (!didHitAFly && tmps.isNotEmpty) {
       activeView = View.lost;
       if (soundButton.isEnabled) {
-        Flame.audio.play('sfx/haha' + (rand.nextInt(5) + 1).toString() + '.mp3');
+        Flame.audio
+            .play('sfx/haha' + (rand.nextInt(5) + 1).toString() + '.mp3');
       }
       // playHomeBGM();
     }
   }
 
+  @override
   void resize(Size size) {
     screenSize = size;
     tileSize = screenSize.width / 9;
@@ -235,7 +237,8 @@ class LangawGame extends Game with TapDetector {
   void spawnFly() {
     // 随机生成出生位置
     double x = rand.nextDouble() * (screenSize.width - (tileSize * 1.35));
-    double y = (rand.nextDouble() * (screenSize.height - (tileSize * 2.85))) + (tileSize * 1.5);
+    double y = (rand.nextDouble() * (screenSize.height - (tileSize * 2.85))) +
+        (tileSize * 1.5);
     // flies.add(Fly(this, x, y));
     // flies.add(HouseFly(this, x, y));
 
@@ -264,7 +267,7 @@ class LangawGame extends Game with TapDetector {
   }
 
   void updateScore(val) {
-    if(isPlaying) {
+    if (isPlaying) {
       score += val;
       if (score > (storage.getInt('highscore') ?? 0)) {
         storage.setInt('highscore', score);

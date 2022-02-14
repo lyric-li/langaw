@@ -1,14 +1,13 @@
 import 'dart:ui';
 
 import 'package:flame/sprite.dart';
-
 import './fly.dart';
-import '../langaw-game.dart';
+import '../langaw_game.dart';
 
 class AgileFly extends Fly {
+  // int value = 5;
 
-  int value = 5;
-
+  @override
   double get speed => game.tileSize * 5;
 
   AgileFly(LangawGame game, double x, double y) : super(game) {

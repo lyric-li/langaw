@@ -1,10 +1,9 @@
 import 'dart:ui';
-
 import 'package:flame/flame.dart';
 import 'package:flame/sprite.dart';
-
-import '../langaw-game.dart';
+import '../langaw_game.dart';
 import './callout.dart';
+import '../utils.dart';
 
 class Fly {
   final LangawGame game;
@@ -33,15 +32,16 @@ class Fly {
 
   void render(Canvas c) {
     // c.drawRect(flyRect, flyPaint);
-    if(isDead) {
+    if (isDead) {
       // 绘制飞蝇死亡图像
       deadSprite.renderRect(c, flyRect.inflate(flyRect.width / 2));
     } else {
       // 绘制飞蝇飞行图像
       try {
-        flyingSprite[flyingSpriteIndex.toInt()].renderRect(c, flyRect.inflate(flyRect.width / 2));
+        flyingSprite[flyingSpriteIndex.toInt()]
+            .renderRect(c, flyRect.inflate(flyRect.width / 2));
       } catch (e) {
-        print(e);
+        printLog(e);
       }
       if (game.isPlaying) {
         callout.render(c);
@@ -50,7 +50,7 @@ class Fly {
   }
 
   void update(double t) {
-    if(isDead) {
+    if (isDead) {
       // 飞蝇坠落
       flyRect = flyRect.translate(0, game.tileSize * 12 * t);
     } else {
@@ -59,12 +59,13 @@ class Fly {
       while (flyingSpriteIndex >= 2) {
         flyingSpriteIndex -= 2;
       }
-  
+
       // 计算飞蝇行动轨迹
       double stepDistance = speed * t;
       Offset toTarget = targetLocation - Offset(flyRect.left, flyRect.top);
       if (stepDistance < toTarget.distance) {
-        Offset stepToTarget = Offset.fromDirection(toTarget.direction, stepDistance);
+        Offset stepToTarget =
+            Offset.fromDirection(toTarget.direction, stepDistance);
         flyRect = flyRect.shift(stepToTarget);
       } else {
         flyRect = flyRect.shift(toTarget);
@@ -87,13 +88,17 @@ class Fly {
     game.updateScore(score);
 
     if (game.soundButton.isEnabled) {
-      Flame.audio.play('sfx/ouch' + (game.rand.nextInt(11) + 1).toString() + '.mp3');
+      Flame.audio
+          .play('sfx/ouch' + (game.rand.nextInt(11) + 1).toString() + '.mp3');
     }
   }
 
   void setTargetLocation() {
-    double x = game.rand.nextDouble() * (game.screenSize.width - (game.tileSize * 1.35));
-    double y = (game.rand.nextDouble() * (game.screenSize.height - (game.tileSize * 2.85))) + (game.tileSize * 1.5);
+    double x = game.rand.nextDouble() *
+        (game.screenSize.width - (game.tileSize * 1.35));
+    double y = (game.rand.nextDouble() *
+            (game.screenSize.height - (game.tileSize * 2.85))) +
+        (game.tileSize * 1.5);
     targetLocation = Offset(x, y);
   }
 }

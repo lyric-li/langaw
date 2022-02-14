@@ -1,64 +1,63 @@
 import 'package:flutter/material.dart';
-
 import 'package:flame/flame.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import './langaw-game.dart';
+import './langaw_game.dart';
+import './utils.dart';
 
 class Launch extends StatefulWidget {
+  const Launch({Key key}) : super(key: key);
+
   @override
   _LaunchState createState() => _LaunchState();
 }
 
 class _LaunchState extends State<Launch> {
-
   int _progress = 0;
 
   @override
   void initState() {
     super.initState();
-    initialize(this.context);
+    initialize(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Stack(
-        alignment: Alignment.center,
-        fit: StackFit.expand,
-        children: <Widget>[
-          Image(
-            image: AssetImage('assets/images/bg/backyard.png'),
-            fit: BoxFit.fill,
-          ),
-          Positioned(
-            bottom: 48.0,
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20.0),
-                color: Color.fromRGBO(0, 0, 0, .45),
-              ),
-              padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-              child: Text(
-                '正在加载数据...' + _progress.toString() + '%',
-                textDirection: TextDirection.ltr,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18.0,
-                  height: 1.2,
-                  decoration: TextDecoration.none,
-                  decorationStyle: TextDecorationStyle.dashed,
-                ),
+    return Stack(
+      alignment: Alignment.center,
+      fit: StackFit.expand,
+      children: <Widget>[
+        const Image(
+          image: AssetImage('assets/images/bg/backyard.png'),
+          fit: BoxFit.fill,
+        ),
+        Positioned(
+          bottom: 48.0,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20.0),
+              color: const Color.fromRGBO(0, 0, 0, .45),
+            ),
+            padding:
+                const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+            child: Text(
+              '正在加载数据...' + _progress.toString() + '%',
+              textDirection: TextDirection.ltr,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 18.0,
+                height: 1.2,
+                decoration: TextDecoration.none,
+                decorationStyle: TextDecorationStyle.dashed,
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
   void initialize(BuildContext context) async {
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     updateProgress(10);
 
     // 加载图片资源
@@ -93,7 +92,7 @@ class _LaunchState extends State<Launch> {
       'ui/icon-sound-enabled.png',
     ]);
 
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     updateProgress(50);
 
     // 加载音频资源
@@ -119,18 +118,18 @@ class _LaunchState extends State<Launch> {
       'bgm/home.mp3',
     ]);
 
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     updateProgress(98);
 
     // 初始化数据存储
     SharedPreferences storage = await SharedPreferences.getInstance();
     LangawGame game = LangawGame(storage);
 
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     updateProgress(100);
 
-    print('数据加载完成, 进入游戏主界面');
-    await Future.delayed(Duration(seconds: 1));
+    printLog('数据加载完成, 进入游戏主界面');
+    await Future.delayed(const Duration(seconds: 1));
     Navigator.of(context).pushReplacement(MaterialPageRoute(
       builder: (context) => game.widget,
     ));
@@ -140,6 +139,6 @@ class _LaunchState extends State<Launch> {
     setState(() {
       _progress = value;
     });
-    print(_progress);
+    printLog(_progress);
   }
 }

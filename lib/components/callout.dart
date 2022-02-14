@@ -1,12 +1,9 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-
 import 'package:flame/flame.dart';
 import 'package:flame/sprite.dart';
-
 import './fly.dart';
 import '../view.dart';
+import '../utils.dart';
 
 class Callout {
   final Fly fly;
@@ -37,7 +34,7 @@ class Callout {
       textDirection: TextDirection.ltr,
     );
 
-    style = TextStyle(
+    style = const TextStyle(
       color: Color(0xff000000),
       fontSize: 15,
     );
@@ -54,7 +51,7 @@ class Callout {
     try {
       painter.paint(c, offset);
     } catch (e) {
-      print(e);
+      printLog(e);
     }
   }
 
@@ -64,17 +61,18 @@ class Callout {
       // value = value - .15 * t;
       // print('倒计时 $t');
       // print('倒计时 $value');
-      if (value <=1) {
+      if (value <= 1) {
         fly.game.updateActiveView(View.lost);
 
         if (fly.game.soundButton.isEnabled) {
-          Flame.audio.play('sfx/haha' + (fly.game.rand.nextInt(5) + 1).toString() + '.mp3');
+          Flame.audio.play(
+              'sfx/haha' + (fly.game.rand.nextInt(5) + 1).toString() + '.mp3');
         }
-        
+
         // fly.game.playHomeBGM();
-      } 
+      }
     }
-    
+
     rect = Rect.fromLTWH(
       fly.flyRect.left - (fly.game.tileSize * .25),
       fly.flyRect.top - (fly.game.tileSize * .5),
