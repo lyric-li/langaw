@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flame/flame.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -40,7 +42,7 @@ class _LaunchState extends State<Launch> {
             padding:
                 const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
             child: Text(
-              '正在加载数据...' + _progress.toString() + '%',
+              '正在加载数据... $_progress%',
               textDirection: TextDirection.ltr,
               style: const TextStyle(
                 color: Colors.white,
@@ -57,9 +59,6 @@ class _LaunchState extends State<Launch> {
   }
 
   void initialize(BuildContext context) async {
-    await Future.delayed(const Duration(seconds: 1));
-    updateProgress(10);
-
     // 加载图片资源
     await Flame.images.loadAll([
       'bg/backyard.png',
@@ -92,44 +91,49 @@ class _LaunchState extends State<Launch> {
       'ui/icon-sound-enabled.png',
     ]);
 
-    await Future.delayed(const Duration(seconds: 1));
-    updateProgress(50);
-
     // 加载音频资源
-    Flame.audio.disableLog();
-    await Flame.audio.loadAll(<String>[
-      'sfx/haha1.mp3',
-      'sfx/haha2.mp3',
-      'sfx/haha3.mp3',
-      'sfx/haha4.mp3',
-      'sfx/haha5.mp3',
-      'sfx/ouch1.mp3',
-      'sfx/ouch2.mp3',
-      'sfx/ouch3.mp3',
-      'sfx/ouch4.mp3',
-      'sfx/ouch5.mp3',
-      'sfx/ouch6.mp3',
-      'sfx/ouch7.mp3',
-      'sfx/ouch8.mp3',
-      'sfx/ouch9.mp3',
-      'sfx/ouch10.mp3',
-      'sfx/ouch11.mp3',
-      'bgm/playing.mp3',
-      'bgm/home.mp3',
-    ]);
-
-    await Future.delayed(const Duration(seconds: 1));
-    updateProgress(98);
+    try {
+      Flame.audio.disableLog();
+      await Flame.audio.loadAll(<String>[
+        'sfx/haha1.mp3',
+        'sfx/haha2.mp3',
+        'sfx/haha3.mp3',
+        'sfx/haha4.mp3',
+        'sfx/haha5.mp3',
+        'sfx/ouch1.mp3',
+        'sfx/ouch2.mp3',
+        'sfx/ouch3.mp3',
+        'sfx/ouch4.mp3',
+        'sfx/ouch5.mp3',
+        'sfx/ouch6.mp3',
+        'sfx/ouch7.mp3',
+        'sfx/ouch8.mp3',
+        'sfx/ouch9.mp3',
+        'sfx/ouch10.mp3',
+        'sfx/ouch11.mp3',
+        'bgm/playing.mp3',
+        'bgm/home.mp3',
+      ]);
+    } catch (e) {
+      printLog(e);
+    }
 
     // 初始化数据存储
     SharedPreferences storage = await SharedPreferences.getInstance();
     LangawGame game = LangawGame(storage);
 
     await Future.delayed(const Duration(seconds: 1));
+    updateProgress(getRandomNum());
+
+    await Future.delayed(const Duration(seconds: 1));
+    updateProgress(50 + getRandomNum());
+
+    await Future.delayed(const Duration(seconds: 1));
     updateProgress(100);
 
     printLog('数据加载完成, 进入游戏主界面');
     await Future.delayed(const Duration(seconds: 1));
+
     Navigator.of(context).pushReplacement(MaterialPageRoute(
       builder: (context) => game.widget,
     ));
@@ -140,5 +144,9 @@ class _LaunchState extends State<Launch> {
       _progress = value;
     });
     printLog(_progress);
+  }
+
+  int getRandomNum() {
+    return Random().nextInt(49);
   }
 }
