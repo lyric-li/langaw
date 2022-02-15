@@ -31,11 +31,12 @@ dependencies:
 
   # A minimalistic Flutter game engine.
   # flame: ^1.0.0-rc5
-  flame: ^0.29.3
+  flame: ^1.0.0
+  flame_audio: ^1.0.0
 
   # Flutter plugin for reading and writing simple key-value pairs.
   # Wraps NSUserDefaults on iOS and SharedPreferences on Android.
-  shared_preferences: ^0.5.8
+  shared_preferences: ^2.0.13
 
   # Draw SVG (and some Android VectorDrawable (XML)) files on a Flutter Widget.
   flutter_svg: ^0.20.0-nullsafety.3

@@ -2,6 +2,7 @@ import 'dart:ui';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:flame/sprite.dart';
 import '../langaw_game.dart';
+import '../utils.dart';
 import '../view.dart';
 
 class CreditsButton {
@@ -17,7 +18,11 @@ class CreditsButton {
       game.tileSize,
       game.tileSize,
     );
-    sprite = Sprite('ui/icon-credits.png');
+    initSprite();
+  }
+
+  void initSprite() async {
+    sprite = await loadSprite('ui/icon-credits.png');
   }
 
   void render(Canvas c) {

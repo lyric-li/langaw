@@ -1,7 +1,5 @@
-// ignore_for_file: import_of_legacy_library_into_null_safe
-
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
-import 'package:flame/flame.dart';
 import 'package:flame/sprite.dart';
 import './fly.dart';
 import '../view.dart';
@@ -19,7 +17,8 @@ class Callout {
   late double value;
 
   Callout(this.fly) {
-    sprite = Sprite('ui/callout.png');
+    initSprite();
+
     value = 6;
 
     rect = Rect.fromLTWH(
@@ -48,6 +47,10 @@ class Callout {
     painter.layout();
   }
 
+  void initSprite() async {
+    sprite = await loadSprite('ui/callout.png');
+  }
+
   void render(Canvas c) {
     sprite.renderRect(c, rect);
     try {
@@ -67,7 +70,7 @@ class Callout {
         fly.game.updateActiveView(View.lost);
 
         if (fly.game.soundButton.isEnabled) {
-          Flame.audio.play(
+          FlameAudio.play(
               'sfx/haha' + (fly.game.rand.nextInt(5) + 1).toString() + '.mp3');
         }
 

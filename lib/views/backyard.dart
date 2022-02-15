@@ -1,14 +1,14 @@
 import 'dart:ui';
-// ignore: import_of_legacy_library_into_null_safe
 import 'package:flame/sprite.dart';
 import '../langaw_game.dart';
+import '../utils.dart';
 
 class Backyard {
   late Sprite bgSprite;
   late Rect bgRect;
 
   Backyard(LangawGame game) {
-    bgSprite = Sprite('bg/backyard.png');
+    initBgSprite();
 
     bgRect = Rect.fromLTWH(
       0,
@@ -16,6 +16,10 @@ class Backyard {
       game.tileSize * 9,
       game.tileSize * 23,
     );
+  }
+
+  void initBgSprite() async {
+    bgSprite = await loadSprite('bg/backyard.png');
   }
 
   void render(Canvas c) {

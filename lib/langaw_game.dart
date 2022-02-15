@@ -1,18 +1,15 @@
-// ignore_for_file: import_of_legacy_library_into_null_safe
-
 import 'dart:ui';
 import 'dart:math';
 
-import 'package:flutter/gestures.dart';
+import 'package:flame_audio/flame_audio.dart';
 
 import 'package:flame/game.dart';
-import 'package:flame/flame.dart';
-import 'package:flame/gestures.dart';
+import 'package:flame/input.dart';
+import 'package:langaw/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 import './components/fly.dart';
-import './components/backyard.dart';
 import 'components/house_fly.dart';
 import 'components/agile_fly.dart';
 import 'components/drooler_fly.dart';
@@ -24,6 +21,7 @@ import 'components/highscore_display.dart';
 import './controllers/spawner.dart';
 
 import './view.dart';
+import './views/backyard.dart';
 import './views/home.dart';
 import './views/lost.dart';
 import 'views/start_button.dart';
@@ -34,7 +32,7 @@ import 'views/credits_view.dart';
 import 'views/music_button.dart';
 import 'views/sound_button.dart';
 
-class LangawGame extends Game with TapDetector {
+class LangawGame extends FlameGame with TapDetector {
   final SharedPreferences storage;
 
   late Size screenSize;
@@ -61,15 +59,27 @@ class LangawGame extends Game with TapDetector {
   bool get isPlaying => activeView == View.playing;
 
   LangawGame(this.storage) {
-    initialize();
+    initialize(375, 667);
+  }
+
+  @override
+  void onGameResize(Vector2 canvasSize) {
+    super.onGameResize(canvasSize);
+    printLog(canvasSize.x);
+    printLog(canvasSize.y);
+
+    // resize(Size(canvasSize.x, canvasSize.y));
+    initialize(canvasSize.x, canvasSize.y);
   }
 
   /// 初始化
-  void initialize() async {
+  void initialize(double x, double y) async {
     flies = List<Fly>.empty(growable: true);
 
     // 重新计算屏幕尺寸和区块尺寸
-    resize(await Flame.util.initialDimensions());
+    // Size s = Size(size.x, size.y);
+    // resize(s);
+    resize(Size(x, y));
 
     // 初始化UI
     background = Backyard(this);
@@ -98,7 +108,7 @@ class LangawGame extends Game with TapDetector {
     // bgm.initialize();
     // bgm.play('bgm/playing.mp3', volume: .25);
 
-    bgm = await Flame.audio.loop('bgm/playing.mp3', volume: .25);
+    bgm = await FlameAudio.loop('bgm/playing.mp3', volume: .25);
     // Flame.bgm.play('adventure-track.mp3');
 
     // playingBGM = await Flame.audio.loop('bgm/playing.mp3', volume: .25);
@@ -112,6 +122,8 @@ class LangawGame extends Game with TapDetector {
 
   @override
   void render(Canvas canvas) {
+    super.render(canvas);
+
     // Rect bgRect = Rect.fromLTWH(0, 0, screenSize.width, screenSize.height);
     // Paint bgPaint = Paint();
     // bgPaint.color = Color(0xff576574);
@@ -156,27 +168,30 @@ class LangawGame extends Game with TapDetector {
   }
 
   @override
-  void update(double t) {
+  void update(double dt) {
+    super.update(dt);
+
     for (var fly in flies) {
-      fly.update(t);
+      fly.update(dt);
     }
     flies.removeWhere((Fly fly) => fly.isOffScreen);
-    spawner.update(t);
+    spawner.update(dt);
     if (isPlaying) {
-      scoreDisplay.update(t);
+      scoreDisplay.update(dt);
     }
   }
 
   @override
-  void onTapDown(TapDownDetails details) {
+  void onTapDown(TapDownInfo info) {
+    Offset offset = info.eventPosition.global.toOffset();
     // 音乐按钮
-    if (musicButton.rect.contains(details.globalPosition)) {
+    if (musicButton.rect.contains(offset)) {
       musicButton.onTapDown();
       return;
     }
 
     // 音效按钮
-    if (soundButton.rect.contains(details.globalPosition)) {
+    if (soundButton.rect.contains(offset)) {
       soundButton.onTapDown();
       return;
     }
@@ -188,18 +203,18 @@ class LangawGame extends Game with TapDetector {
       }
 
       // 点击帮助按钮
-      if (helpButton.rect.contains(details.globalPosition)) {
+      if (helpButton.rect.contains(offset)) {
         helpButton.onTapDown();
       }
 
       // 点击感谢按钮
-      if (creditsButton.rect.contains(details.globalPosition)) {
+      if (creditsButton.rect.contains(offset)) {
         creditsButton.onTapDown();
       }
 
       // 点击开始按钮
       if ((activeView == View.home || activeView == View.lost) &&
-          startButton.rect.contains(details.globalPosition)) {
+          startButton.rect.contains(offset)) {
         startButton.onTapDown();
       }
       return;
@@ -207,7 +222,7 @@ class LangawGame extends Game with TapDetector {
 
     bool didHitAFly = false;
     for (var fly in flies) {
-      if (fly.flyRect.contains(details.globalPosition)) {
+      if (fly.flyRect.contains(offset)) {
         fly.onTapDown(fly.value);
         didHitAFly = true;
       }
@@ -223,14 +238,12 @@ class LangawGame extends Game with TapDetector {
     if (!didHitAFly && tmps.isNotEmpty) {
       activeView = View.lost;
       if (soundButton.isEnabled) {
-        Flame.audio
-            .play('sfx/haha' + (rand.nextInt(5) + 1).toString() + '.mp3');
+        FlameAudio.play('sfx/haha' + (rand.nextInt(5) + 1).toString() + '.mp3');
       }
       // playHomeBGM();
     }
   }
 
-  @override
   void resize(Size size) {
     screenSize = size;
     tileSize = screenSize.width / 9;

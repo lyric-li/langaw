@@ -1,8 +1,6 @@
-// ignore_for_file: import_of_legacy_library_into_null_safe
-
 import 'dart:ui';
-import 'package:flame/flame.dart';
 import 'package:flame/sprite.dart';
+import 'package:flame_audio/flame_audio.dart';
 import '../langaw_game.dart';
 import './callout.dart';
 import '../utils.dart';
@@ -90,8 +88,8 @@ class Fly {
     game.updateScore(score);
 
     if (game.soundButton.isEnabled) {
-      Flame.audio
-          .play('sfx/ouch' + (game.rand.nextInt(11) + 1).toString() + '.mp3');
+      FlameAudio.play(
+          'sfx/ouch' + (game.rand.nextInt(11) + 1).toString() + '.mp3');
     }
   }
 

@@ -2,6 +2,7 @@ import 'dart:ui';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:flame/sprite.dart';
 import '../langaw_game.dart';
+import '../utils.dart';
 import '../view.dart';
 
 class StartButton {
@@ -17,7 +18,11 @@ class StartButton {
       game.tileSize * 6,
       game.tileSize * 3,
     );
-    sprite = Sprite('ui/start-button.png');
+    initSprite();
+  }
+
+  void initSprite() async {
+    sprite = await loadSprite('ui/start-button.png');
   }
 
   void render(Canvas c) {

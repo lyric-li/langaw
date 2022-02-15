@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:flame/game.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:flame/flame.dart';
@@ -95,8 +97,7 @@ class _LaunchState extends State<Launch> {
 
     // 加载音频资源
     try {
-      Flame.audio.disableLog();
-      await Flame.audio.loadAll(<String>[
+      await FlameAudio.audioCache.loadAll([
         'sfx/haha1.mp3',
         'sfx/haha2.mp3',
         'sfx/haha3.mp3',
@@ -120,10 +121,6 @@ class _LaunchState extends State<Launch> {
       printLog(e);
     }
 
-    // 初始化数据存储
-    SharedPreferences storage = await SharedPreferences.getInstance();
-    LangawGame game = LangawGame(storage);
-
     await Future.delayed(const Duration(seconds: 1));
     updateProgress(getRandomNum());
 
@@ -136,8 +133,14 @@ class _LaunchState extends State<Launch> {
     printLog('数据加载完成, 进入游戏主界面');
     await Future.delayed(const Duration(seconds: 1));
 
+    // 初始化数据存储
+    SharedPreferences storage = await SharedPreferences.getInstance();
+    LangawGame game = LangawGame(storage);
+
     Navigator.of(context).pushReplacement(MaterialPageRoute(
-      builder: (context) => game.widget,
+      builder: (context) => GameWidget(
+        game: game,
+      ),
     ));
   }
 

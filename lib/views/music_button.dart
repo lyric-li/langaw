@@ -2,6 +2,7 @@ import 'dart:ui';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:flame/sprite.dart';
 import '../langaw_game.dart';
+import '../utils.dart';
 
 class MusicButton {
   final LangawGame game;
@@ -19,8 +20,13 @@ class MusicButton {
       game.tileSize,
       game.tileSize,
     );
-    enabledSprite = Sprite('ui/icon-music-enabled.png');
-    disabledSprite = Sprite('ui/icon-music-disabled.png');
+
+    initSprite();
+  }
+
+  void initSprite() async {
+    enabledSprite = await loadSprite('ui/icon-music-enabled.png');
+    disabledSprite = await loadSprite('ui/icon-music-disabled.png');
   }
 
   void render(Canvas c) {

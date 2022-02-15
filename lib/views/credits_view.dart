@@ -2,6 +2,7 @@ import 'dart:ui';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:flame/sprite.dart';
 import '../langaw_game.dart';
+import '../utils.dart';
 
 class CreditsView {
   final LangawGame game;
@@ -16,7 +17,12 @@ class CreditsView {
       game.tileSize * 8,
       game.tileSize * 12,
     );
-    sprite = Sprite('ui/dialog-credits.png');
+
+    initSprite();
+  }
+
+  void initSprite() async {
+    sprite = await loadSprite('ui/dialog-credits.png');
   }
 
   void render(Canvas c) {

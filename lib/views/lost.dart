@@ -2,6 +2,7 @@ import 'dart:ui';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:flame/sprite.dart';
 import '../langaw_game.dart';
+import '../utils.dart';
 
 class LostView {
   final LangawGame game;
@@ -16,7 +17,12 @@ class LostView {
       game.tileSize * 7,
       game.tileSize * 5,
     );
-    sprite = Sprite('bg/lose-splash.png');
+
+    initSprite();
+  }
+
+  void initSprite() async {
+    sprite = await loadSprite('bg/lose-splash.png');
   }
 
   void render(Canvas c) {
