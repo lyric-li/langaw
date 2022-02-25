@@ -6,7 +6,7 @@ class FlySpawner {
   final int maxSpawnInterval = 3000;
   final int minSpawnInterval = 250;
   final int intervalChange = 3;
-  final int maxFliesOnScreen = 7;
+  final int maxFliesOnScreen = 5;
 
   late int currentInterval;
   late int nextSpawn;
@@ -30,7 +30,6 @@ class FlySpawner {
 
   void update(double t) {
     // 生成新的飞蝇
-
     int nowTimestamp = DateTime.now().millisecondsSinceEpoch;
 
     int livingFlies = 0;
