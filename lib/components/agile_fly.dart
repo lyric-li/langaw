@@ -6,10 +6,12 @@ import './fly.dart';
 import '../langaw_game.dart';
 
 class AgileFly extends Fly {
-  // int value = 5;
+  @override
+  // ignore: overridden_fields
+  int value = 5;
 
   @override
-  double get speed => game.tileSize * 5;
+  double get speed => game.tileSize * value;
 
   AgileFly(LangawGame game, double x, double y) : super(game) {
     flyRect = Rect.fromLTWH(x, y, game.tileSize * 1, game.tileSize * 1);

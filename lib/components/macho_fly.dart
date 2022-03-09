@@ -8,10 +8,12 @@ import './fly.dart';
 import '../langaw_game.dart';
 
 class MachoFly extends Fly {
-  // int value = 4;
+  @override
+  // ignore: overridden_fields
+  int value = 4;
 
   @override
-  double get speed => game.tileSize * 4;
+  double get speed => game.tileSize * value;
 
   MachoFly(LangawGame game, double x, double y) : super(game) {
     flyRect = Rect.fromLTWH(x, y, game.tileSize * 1.35, game.tileSize * 1.35);

@@ -7,10 +7,12 @@ import './fly.dart';
 import '../langaw_game.dart';
 
 class DroolerFly extends Fly {
-  // int value = 2;
+  @override
+  // ignore: overridden_fields
+  int value = 2;
 
   @override
-  double get speed => game.tileSize * 2;
+  double get speed => game.tileSize * value;
 
   DroolerFly(LangawGame game, double x, double y) : super(game) {
     flyRect = Rect.fromLTWH(x, y, game.tileSize * 1, game.tileSize * 1);

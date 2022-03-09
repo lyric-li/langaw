@@ -19,7 +19,7 @@ class Fly {
   late Callout callout;
 
   int value = 1;
-  double get speed => game.tileSize * 3;
+  double get speed => game.tileSize * value;
 
   Fly(this.game) {
     // flyRect = Rect.fromLTWH(x, y, game.tileSize, game.tileSize);

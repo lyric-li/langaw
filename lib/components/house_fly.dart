@@ -7,10 +7,12 @@ import './fly.dart';
 import '../langaw_game.dart';
 
 class HouseFly extends Fly {
-  // int value = 3;
+  @override
+  // ignore: overridden_fields
+  int value = 1;
 
   @override
-  double get speed => game.tileSize * 3;
+  double get speed => game.tileSize * value;
 
   HouseFly(LangawGame game, double x, double y) : super(game) {
     flyRect = Rect.fromLTWH(x, y, game.tileSize * 1, game.tileSize * 1);
